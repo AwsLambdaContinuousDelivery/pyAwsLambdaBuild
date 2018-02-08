@@ -17,10 +17,10 @@ def getBuild( template: Template
               , interimName: str
               , outputName: str
               , stages: List[str]
-              ) -> Stages: #TODO continue here
-              # We need to add the parameter overrides to the deployment of the 
-              # lambda function and not to the other crap
-  role = template.add_resource(getBuildRole())
+              ) -> Stages:
+  role = getBuildRole()
+  if role.title not in template.resources:
+    role = template.add_resource(role)
   artBuilder = getDeploymentBuilder(role)
   artBuilderRef = template.add_resource(artBuilder)
   funcBuilder = getCloudFormationBuilder(role, stages)
