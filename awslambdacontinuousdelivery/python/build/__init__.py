@@ -1,3 +1,7 @@
+# By Janos Potecki
+# University College London
+# January 2018
+
 
 from awslambdacontinuousdelivery.python.build.resources import *
 
@@ -9,15 +13,15 @@ from typing import Tuple
 Key = str
 Bucket = str
 
-def buildStage( template: Template 
-              , repo_code: str
-              , interimName: str
-              , outputName: str
-              , stages: List[str]
-              ) -> Stages: #TODO continue here
-              # We need to add the parameter overrides to the deployment of the 
-              # lambda function and not to the other crap
-  role = template.add_resource(getBuildRole())
+def getBuild( template: Template
+            , repo_code: str
+            , interimName: str
+            , outputName: str
+            , stages: List[str]
+            ) -> Stages:
+  role = getBuildRole()
+  if role.title not in template.resources:
+    role = template.add_resource(role)
   artBuilder = getDeploymentBuilder(role)
   artBuilderRef = template.add_resource(artBuilder)
   funcBuilder = getCloudFormationBuilder(role, stages)
