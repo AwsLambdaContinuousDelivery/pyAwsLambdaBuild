@@ -2,6 +2,7 @@
 # University College London
 # January 2018
 
+
 from awslambdacontinuousdelivery.python.build.resources import *
 
 from troposphere import GetAtt, Template
@@ -13,11 +14,11 @@ Key = str
 Bucket = str
 
 def getBuild( template: Template
-              , repo_code: str
-              , interimName: str
-              , outputName: str
-              , stages: List[str]
-              ) -> Stages:
+            , repo_code: str
+            , interimName: str
+            , outputName: str
+            , stages: List[str]
+            ) -> Stages:
   role = getBuildRole()
   if role.title not in template.resources:
     role = template.add_resource(role)
